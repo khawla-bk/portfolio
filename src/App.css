@@ -246,7 +246,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 .banner {
   margin-top: 0;
   padding: 260px 0 100px 0;
-  background-image: url("./assets/img/banner-bg.png");
+  background-image: url("./assets/img/background.png");
   background-position: top center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -257,8 +257,8 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   padding: 8px 10px;
   background: linear-gradient(
     90.21deg,
-    rgba(170, 54, 124, 0.5) -5.91%,
-    rgba(74, 47, 189, 0.5) 111.58%
+    rgba(36, 161, 115, 0.5) -5.91%,
+    rgba(17, 66, 131, 0.5) 111.58%
   );
   border: 1px solid rgba(255, 255, 255, 0.5);
   font-size: 20px;
