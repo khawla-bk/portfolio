@@ -16,7 +16,7 @@ pipeline {
         stage('Deploy Docker Image') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                    withCredentials([string(credentialsId: 'dockerhub_pwd', variable: 'dockerhubpwd')]) {
                         sh 'docker login -u kbenkadida006 -p ${dockerhubpwd}'
                     }
                     sh 'docker push kindest/node:v1.23.4'
