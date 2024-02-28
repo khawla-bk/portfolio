@@ -33,5 +33,12 @@ pipeline {
                 }
             }
         }
+        stage('SonarQube analysis') {
+            steps {
+                withSonarQubeEnv('sq1') {
+                    sh 'sonar-scanner -Dsonar.projectKey=YourProjectKey -Dsonar.sources=. -Dsonar.host.url=http://192.168.1.16:9000 -Dsonar.login=squ_66bacb76ba7a0ba0bb014aed5f1c7e6ee73882c7'
+                }
+            }
+        }
     }
 }
