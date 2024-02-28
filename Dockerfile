@@ -1,19 +1,28 @@
-FROM node:14
+# Use the official Golang image to create a build artifact.
+FROM golang:1.15 as builder
 
-# Set the working directory in the container
-WORKDIR /src/
+# Set the Current Working Directory inside the container
+WORKDIR /app
 
-# Copy the current directory contents into the container at /usr/src/app
+# Copy everything from the current directory to the PWD(Present Working Directory) inside the container
 COPY . .
 
-# Install any needed packages specified in package.json
-RUN npm install
+# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
+RUN go mod download
 
-# Make port 3000 available to the world outside this container
-EXPOSE 3000
+# Build the Go app
+RUN go build -o portfolio .
 
-# Define environment variable
-ENV NAME World
+# Start a new stage from scratch
+FROM alpine:latest  
 
-# Run the app when the container launches
-CMD ["node", "App.js"]
+WORKDIR /root/
+
+# Copy the Pre-built binary file from the previous stage
+COPY --from=builder /app/portfolio .
+
+# Expose port 8080 to the outside world
+EXPOSE 8080
+
+# Command to run the executable
+CMD ["./portfolio"]
