@@ -19,11 +19,10 @@ pipeline {
         stage('Deploy Docker Image') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'dockerhub_pwd', variable: 'dockerhubpwd')]) {
-                        sh "echo ${dockerhubpwd} | docker login -u kbenkadida006 --password-stdin"
+                    withCredentials([string(credentialsId: 'dockerhub_pwd', variable: 'DOCKERHUB_PWD')]) {
+                        sh "echo ${DOCKERHUB_PWD} | docker login -u kbenkadida006 --password-stdin"
+                        sh "docker push ${env.DOCKER_IMAGE}"
                     }
-                    // Push the built image to the Docker registry
-                    sh "docker push ${DOCKER_IMAGE}"
                 }
             }
         }
