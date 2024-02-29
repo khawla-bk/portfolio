@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: portfolio-config
+data:
+  config.json: |
+    {
+      "databaseUrl":: "jdbc:mysql://192.168.1.16:3306/myappdb",
+      "externalApi": "http://api.openweathermap.org/data/2.5/weather"
+    }
