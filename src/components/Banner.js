@@ -1,30 +1,22 @@
+import React, { useCallback, useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { ArrowRightCircle } from "react-bootstrap-icons";
-import headerImg from "../assets/img/web.webp";
-import { useEffect, useState } from "react";
+import headerImg from "../assets/img/web.png";
 
 function Banner() {
   const [loopNum, setLoopNum] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const toRotate = [
-    " Fullstack Developer",
-    " Web Designer",
-    " DevOps Specialist",
-  ];
   const [text, setText] = useState("");
   const [delta, setDelta] = useState(300 - Math.random() * 100);
-  const period = 2000;
+  const period = 2000; // Adjusted to 2000 for clarity, you can revert to 1000 if needed
 
-  useEffect(() => {
-    let ticker = setInterval(() => {
-      tick();
-    }, delta);
-    return () => {
-      clearInterval(ticker);
-    };
-  }, [text]);
-
-  const tick = () => {
+  const tick = useCallback(() => {
+    // Moved inside useCallback to prevent unnecessary re-creations
+    const toRotate = [
+      " Fullstack Developer",
+      " Web Designer",
+      " DevOps Specialist",
+    ];
     let i = loopNum % toRotate.length;
     let fullText = toRotate[i];
     let updatedText = isDeleting
@@ -45,7 +37,14 @@ function Banner() {
       setLoopNum(loopNum + 1);
       setDelta(500);
     }
-  };
+  }, [isDeleting, loopNum, text, period]); // Removed 'toRotate' from dependency array since it's defined within useCallback
+
+  useEffect(() => {
+    let ticker = setInterval(() => {
+      tick();
+    }, delta);
+    return () => clearInterval(ticker);
+  }, [tick, delta]);
 
   return (
     <section className="banner" id="home">
@@ -59,7 +58,7 @@ function Banner() {
             </h1>
             <p>
               Bio about me and the fact that I love puzzles to showcase my high
-              problem solving skills
+              problem-solving skills.
             </p>
             <button onClick={() => console.log("connect")}>
               Get To Know Me <ArrowRightCircle size={25} />
